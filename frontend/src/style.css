@@ -1,0 +1,22 @@
+:root {
+    color-scheme: light;
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+#app {
+    min-height: 100vh;
+}
