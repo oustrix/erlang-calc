@@ -125,25 +125,52 @@
       <h2 class="panel__title">Результаты</h2>
       <div class="metrics">
         <div class="metric">
-          <div class="metric__label">Вероятность блокировки (Эрланг B)</div>
+          <div class="metric__label">
+            Вероятность блокировки (Эрланг B)
+            <span
+              class="metric__tooltip"
+              title="P₍block₎ = (Aⁿ / n!) / Σₖ₌₀ⁿ (Aᵏ / k!), где A — предлагаемая нагрузка, n — число операторов"
+              >?</span
+            >
+          </div>
           <div class="metric__value">{percentFormatter.format(result.blockingProbability)}</div>
         </div>
 
         <div class="metric">
-          <div class="metric__label">Вероятность ожидания (Эрланг C)</div>
+          <div class="metric__label">
+            Вероятность ожидания (Эрланг C)
+            <span
+              class="metric__tooltip"
+              title="P₍wait₎ = P₍block₎ × n / (n − A × (1 − P₍block₎)), где A — предлагаемая нагрузка, n — число операторов"
+              >?</span
+            >
+          </div>
           <div class="metric__value">{percentFormatter.format(result.waitingProbability)}</div>
         </div>
 
         <div class="metric">
-          <div class="metric__label">Использование операторов</div>
+          <div class="metric__label">
+            Использование операторов
+            <span class="metric__tooltip" title="Utilization = A / n, где A — предлагаемая нагрузка, n — число операторов"
+              >?</span
+            >
+          </div>
           <div class="metric__value">{percentFormatter.format(result.utilization)}</div>
           <div class="metric__hint">
             При учёте отказов: {percentFormatter.format(result.effectiveUtilization)}
+            <span
+              class="metric__tooltip metric__tooltip--inline"
+              title="Effective utilization = (A × (1 − P₍block₎)) / n"
+              >?</span
+            >
           </div>
         </div>
 
         <div class="metric">
-          <div class="metric__label">Принятая нагрузка</div>
+          <div class="metric__label">
+            Принятая нагрузка
+            <span class="metric__tooltip" title="Traffic carried = A × (1 − P₍block₎)">?</span>
+          </div>
           <div class="metric__value">{numberFormatter.format(result.trafficCarried)} эрл.</div>
           <div class="metric__hint">
             Предлагаемая нагрузка: {numberFormatter.format(result.offeredLoad)} эрл., операторов: {result.servers}
@@ -298,6 +325,34 @@
   .metric__hint {
     font-size: 0.85rem;
     color: #6b7280;
+  }
+
+  .metric__tooltip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.35rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: help;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .metric__tooltip--inline {
+    margin-left: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .metric__tooltip:hover {
+    background: rgba(37, 99, 235, 0.2);
+    color: #1e40af;
   }
 
   @media (max-width: 640px) {
