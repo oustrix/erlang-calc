@@ -119,7 +119,7 @@ class ErlangBApp {
         this.entry_b.value = "";
         this.entry_m.value = "";
         
-        this.results_tbody.innerHTML = "";
+        this.results_tbody.innerHTML = '<div class="empty-results">Результаты расчетов появятся здесь</div>';
         this.setDefaults();
     }
     
@@ -318,12 +318,36 @@ class ErlangBApp {
             this.entry_b.value = B.toFixed(6);
             this.entry_m.value = M.toFixed(6);
             
-            // добавим в таблицу
-            const row = this.results_tbody.insertRow();
-            row.insertCell(0).textContent = Math.round(v);
-            row.insertCell(1).textContent = a.toFixed(6);
-            row.insertCell(2).textContent = B.toFixed(6);
-            row.insertCell(3).textContent = M.toFixed(6);
+            // удаляем пустое сообщение, если есть
+            const emptyMsg = this.results_tbody.querySelector('.empty-results');
+            if (emptyMsg) {
+                emptyMsg.remove();
+            }
+            
+            // создаем карточку результата
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <div class="result-row">
+                    <span class="result-label">Каналы:</span>
+                    <span class="result-value">${Math.round(v)}</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Интенсивность:</span>
+                    <span class="result-value">${a.toFixed(6)}</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Потери:</span>
+                    <span class="result-value">${B.toFixed(6)}</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Занято:</span>
+                    <span class="result-value">${M.toFixed(6)}</span>
+                </div>
+            `;
+            
+            // добавляем в начало списка (новые сверху)
+            this.results_tbody.insertBefore(card, this.results_tbody.firstChild);
             
             // восстановим состояния
             this.updateState();
